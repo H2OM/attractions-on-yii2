@@ -1,0 +1,491 @@
+.Form {
+    padding-bottom: 200px
+}
+
+.Form__form {
+    margin: 100px auto 0;
+    display: flex;
+    flex-direction: column;
+    width: 1200px
+}
+
+.Form__form_submit .Form__form__input {
+    color: #585858
+}
+
+.Form__form_submit .Form__form__input::placeholder {
+    color: #585858
+}
+
+.Form__form__blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10
+}
+
+.Form__form__radio {
+    display: flex
+}
+
+.Form__form__radio__label {
+    font-size: 16px;
+    color: #fff
+}
+
+.Form__form__radio__label_error {
+    color: red
+}
+
+.Form__form__input {
+    margin: 6px 0;
+    background-color: unset;
+    border: 1px solid #868686;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #fff;
+    padding: 16px 26px;
+    transition: all .2s
+}
+
+.Form__form__input::placeholder {
+    color: #868686
+}
+
+.Form__form__input:focus {
+    outline: 0;
+    border: 1px solid #fff
+}
+
+.Form__form__input_radio {
+    margin-left: 10px;
+    cursor: pointer
+}
+
+.Form__form__input__error {
+    color: red;
+    height: 0;
+    font-size: 14px;
+    padding-left: 20px;
+    overflow: hidden;
+    transition: height .2s .2s, margin-bottom .2s .2s, border-left .2s;
+    margin-bottom: 0;
+    mix-blend-mode: difference
+}
+
+.Form__form__input__error_show {
+    height: 17px;
+    margin-bottom: 10px;
+    overflow: visible;
+    transition: all .2s, border-left .2s .2s
+}
+
+.Form__form__input:-webkit-autofill,
+.Form__form__input:-webkit-autofill:active,
+.Form__form__input:-webkit-autofill:focus,
+.Form__form__input:-webkit-autofill:hover {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #fff;
+    -webkit-transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px rgba(35, 35, 35, .161)
+}
+
+.Form__form__input_area {
+    min-height: 300px;
+    max-height: 450px;
+    resize: vertical
+}
+
+.Form__form__input_area::-webkit-scrollbar-button {
+    display: none
+}
+
+.Form__form__input_area::-webkit-scrollbar {
+    background-color: unset;
+    width: 8px
+}
+
+.Form__form__input_area::-webkit-scrollbar-thumb {
+    background-color: #fff
+}
+
+.Form__form__submit {
+    font-size: 16px;
+    height: 74px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 18px;
+    cursor: pointer;
+    transition: all .2s
+}
+
+.Form__form__submit:disabled {
+    color: #6e6e6e
+}
+
+.Form__form__submit:hover {
+    background-color: #d4d4d4
+}
+
+.Form__form__submit_submiting {
+    background-color: #868686
+}
+
+@media(max-width:1560px) {
+    .Form .title {
+        font-size: 96px
+    }
+}
+
+@media(max-width:1400px) {
+    .Form_full .Form__formplate {
+        padding: 150px 0
+    }
+}
+
+@media(max-width:1200px) {
+    .Form__cords {
+        display: none
+    }
+}
+
+@media(max-width:1060px) {
+    .Form__formplate {
+        padding: 60px 20px;
+        width: 100%
+    }
+
+    .Form__form {
+        padding: 0;
+        width: 100%
+    }
+}
+
+@media(max-width:980px)and (min-width:960px) {
+    .Form__formplate .title {
+        font-size: 90px
+    }
+}
+
+@media(max-width:960px) {
+    .Form__formplate {
+        padding: 50px 20px
+    }
+
+    .Form__formplate .title {
+        font-size: 68px;
+        margin-bottom: 66px
+    }
+
+    .Form_full .title {
+        margin-bottom: 80px
+    }
+}
+
+@media(max-width:740px) {
+    .Form__formplate .title {
+        font-size: 56px
+    }
+
+    .Form_full {
+        -webkit-backdrop-filter: blur(30px);
+        backdrop-filter: blur(30px)
+    }
+
+    .Form_full .Form__formplate {
+        padding-top: 90px;
+        padding-bottom: 90px
+    }
+
+    .Form_full .Form__formplate .title {
+        margin-bottom: 80px;
+        font-size: 56px
+    }
+}
+
+@media(max-width:600px) {
+    .Form {
+        padding: 90px 0 170px
+    }
+
+    .Form_full {
+        padding: 0
+    }
+
+    .Form_full .Form__formplate {
+        padding-top: 70px;
+        padding-bottom: 70px
+    }
+
+    .Form_full .Form__formplate .title {
+        font-size: calc(18px + 4vw);
+        margin-bottom: 20px
+    }
+
+    .Form__formplate {
+        padding: 16px 10px 60px
+    }
+
+    .Form__formplate .title {
+        font-size: calc(18px + 4vw);
+        margin-bottom: 20px
+    }
+
+    .Form__form__input {
+        margin-bottom: 12px;
+        font-size: 15px;
+        padding: 12px 10px
+    }
+
+    .Form__form__input::placeholder {
+        font-size: 15px
+    }
+
+    .Form__form__input_textarea {
+        min-height: 80px;
+        max-height: 130px
+    }
+
+    .Form__form__multimenu {
+        padding: 0;
+        margin-top: -14px
+    }
+
+    .Form__form__multimenu__list__row {
+        padding: 12px 10px
+    }
+
+    .Form__form__multimenu_show {
+        height: 220px
+    }
+
+    .Form__form__multibutton__arrow {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 9px solid #e4e4e4
+    }
+
+    .Form__form__submit {
+        font-size: 20px;
+        padding: 16px
+    }
+}
+
+@media(max-width:390px) {
+    .Form_full .Form__form__input_textarea {
+        max-height: 250px;
+        min-height: 90px
+    }
+}
+
+@media(max-width:330px) {
+    .Form__formplate .title {
+        font-size: 28px
+    }
+}
+
+.Contacts {
+    padding-bottom: 30vh
+}
+
+.Contacts__grid {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 180px
+}
+
+.Contacts__grid__section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.Contacts__grid__section__icons {
+    gap: 10px
+}
+
+.Contacts__grid__section__form {
+    margin-top: 10px;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    gap: 2%
+}
+
+.Contacts__grid__section__form__input {
+    width: 70%;
+    background-color: unset;
+    border: 1px solid #868686;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #fff;
+    padding: 16px 26px;
+    transition: all .2s
+}
+
+.Contacts__grid__section__form__input::placeholder {
+    color: #868686
+}
+
+.Contacts__grid__section__form__input:focus {
+    outline: 0;
+    border: 1px solid #fff
+}
+
+.Contacts__grid__section__button {
+    width: 28%;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 0 18px
+}
+
+.Miniform {
+    display: flex;
+    gap: 10px;
+    height: 46px
+}
+
+.Miniform_size {
+    margin-top: 10px;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    gap: 2%
+}
+
+.Miniform__input {
+    background-color: unset;
+    border: 1px solid #868686;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #fff;
+    padding: 16px 26px;
+    transition: all .2s;
+    height: 100%
+}
+
+.Miniform__input::placeholder {
+    color: #868686
+}
+
+.Miniform__input:focus {
+    outline: 0;
+    border: 1px solid #fff
+}
+
+.Miniform__input__error {
+    color: red;
+    height: 0;
+    font-size: 14px;
+    padding-left: 20px;
+    overflow: hidden;
+    transition: height .2s .2s, margin-bottom .2s .2s, border-left .2s;
+    margin-bottom: 0;
+    mix-blend-mode: difference
+}
+
+.Miniform__input__error_show {
+    height: 17px;
+    margin-bottom: 10px;
+    overflow: visible;
+    transition: all .2s, border-left .2s .2s
+}
+
+.Miniform__input:-webkit-autofill,
+.Miniform__input:-webkit-autofill:active,
+.Miniform__input:-webkit-autofill:focus,
+.Miniform__input:-webkit-autofill:hover {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #fff;
+    -webkit-transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px rgba(35, 35, 35, .161)
+}
+
+.Miniform__input__wrap {
+    display: flex;
+    flex-direction: column
+}
+
+.Miniform__input__wrap_size {
+    width: 70%
+}
+
+.Miniform__button {
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 0 18px
+}
+
+.Miniform__button:disabled {
+    color: #6e6e6e
+}
+
+.Miniform__button:hover {
+    background-color: #d4d4d4
+}
+
+.Miniform__button_submiting {
+    background-color: #868686
+}
+
+.Miniform_submit .Miniform__input {
+    color: #585858
+}
+
+.Miniform_submit .Miniform__input::placeholder {
+    color: #585858
+}
+
+.Uptitle {
+    position: relative;
+    overflow: hidden;
+    margin-top: 200px
+}
+
+.Uptitle_full {
+    margin-top: 0;
+    padding-top: 200px
+}
+
+.Uptitle__wrap {
+    position: relative
+}
+
+.Uptitle__anchorUp {
+    position: absolute;
+    top: -100%
+}
+
+.Uptitle__anchorUp_full {
+    top: 0
+}
+
+.Uptitle__anchorDown {
+    position: absolute;
+    bottom: -100%
+}
+
+.Uptitle__anchorDown_full {
+    bottom: 0
+}
+
+.Uptitle_mt360 {
+    margin-top: 360px
+}
+
+.Uptitle .title {
+    transform: translateY(100%);
+    transition: all .6s
+}
+
+.Uptitle_show .title {
+    transform: translateY(0)
+}
