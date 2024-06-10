@@ -42,6 +42,8 @@ section {
     margin: 0 auto;
     position: relative;
     width: 1700px;
+    max-width: unset;
+    padding: 0;
 }
 
 .container_head {
@@ -122,4 +124,3 @@ a {
 .form-group {
     margin-bottom: 1rem;
 }
-

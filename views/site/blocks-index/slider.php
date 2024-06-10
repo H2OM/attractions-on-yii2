@@ -8,8 +8,8 @@
 
 
 <section class="Slider">
-    <div id="sliderWrap" class="Movement__wrap">
-        <div class="Movement__slider">
+    <div class="Movement__wrap">
+        <div id="sliderWrap" class="Movement__slider">
             <?php if(is_array($slider)):?>
                 <?php foreach ($slider as $slide):?>
                     <div class="Slider__slider__slide">

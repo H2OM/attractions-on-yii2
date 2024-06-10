@@ -14,5 +14,5 @@ $this->params['meta_description'] = 'Достопримечательности 
 <?= $this->render('blocks-index/slider', ['slider'=> $slider]) ?>
 <?= $this->render('news', ['news'=>$news])?>
 <?= $this->render('blocks-index/rating-places', ['ratingPlaces'=>$ratingPlaces])?>
-<?= $this->render('blocks-index/compilate-places', ['ratingPlaces'=>$compilatePlaces])?>
-
+<?= $this->render('blocks-index/compilate-places', ['compilatePlaces'=>$compilatePlaces])?>
+<?= $this->render('blocks/form')?>

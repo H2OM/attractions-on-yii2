@@ -5,31 +5,16 @@ document.addEventListener("DOMContentLoaded", ()=>{
     Slider({
         wrapSelector: '#sliderWrap',
         navsSelector: '[data-slider="main-slider"]',
-        slidesSelector: '.Slider__slider__slide'
+        slidesSelector: '#sliderWrap > .Slider__slider__slide'
     });
 
     //Slider for compilate slider
     Slider({
         wrapSelector: '#compilateWrap',
         navsSelector: '[data-slider="compilateSlider"]',
-        slidesSelector: '.Slider__slider__slide',
+        slidesSelector: '.Compilate__blocks__block',
         eachPointEqualThreeSlides: true}
     );
-   const WRAP = document.querySelector(".Movement__slider");
-   const NAVS = document.querySelectorAll(".Movement__nav__point");
-
-   let current = 0;
-
-   NAVS.forEach((each,i)=>{
-       if (i === current) each.classList.add('Movement__nav__point_select');
-
-       each.addEventListener('click',(e)=>{
-            NAVS[current].classList.remove('Movement__nav__point_select');
-            NAVS[i].classList.add('Movement__nav__point_select');
-            current = i;
-            WRAP.style.transform = `translateX(-${100*current}%)`;
-       });
-   });
 
    function Slider({wrapSelector, navsSelector, slidesSelector, eachPointEqualThreeSlides = false}) {
 
