@@ -1,9 +1,12 @@
 <?php
 
-/** @var yii\web\View $this */
-/** @var array $news */
-use yii\helpers\Html;
-$this->title = 'Новости';
+    /** @var yii\web\View $this */
+    /** @var array $news */
+    use yii\helpers\Html;
+
+    if(Yii::$app->controller->action->id == 'news') {
+        $this->title = 'Новости';
+    }
 ?>
 
 <section class="News">

@@ -8,7 +8,7 @@
 
 
 <section class="Slider">
-    <div class="Movement__wrap">
+    <div id="sliderWrap" class="Movement__wrap">
         <div class="Movement__slider">
             <?php if(is_array($slider)):?>
                 <?php foreach ($slider as $slide):?>
@@ -24,7 +24,7 @@
             <?php endif; ?>
         </div>
         <nav class="Movement__nav">
-            <?= str_repeat("<div class='Movement__nav__point'></div>", count($slider))?>
+            <?= str_repeat("<div data-slider='main-slider' class='Movement__nav__point'></div>", count($slider))?>
         </nav>
     </div>
 </section>

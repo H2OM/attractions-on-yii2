@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Catalog;
 use app\models\News;
 use app\models\Slider;
 use Yii;
@@ -39,10 +40,14 @@ class SiteController extends Controller
     {
         $slider = Slider::find()->orderBy('id')->all();
         $news = News::getLastNews();
+        $ratingPlaces = Catalog::getRatingCatalog();
+        $compilatePlaces = Catalog::getCompilateCatalog();
 
         return $this->render('index', [
             'slider'=> $slider,
-            'news'=>$news
+            'news'=>$news,
+            'ratingPlaces'=>$ratingPlaces,
+            'compilatePlaces'=>$compilatePlaces
         ]);
     }
     public function actionContacts()
