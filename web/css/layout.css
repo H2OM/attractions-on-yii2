@@ -545,11 +545,26 @@
     color: #585858
 }
 
+.Notification__blackout {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 400;
+    background-color: rgba(0, 0, 0, 0);
+    transition: 0.2s all;
+}
+
+.Notification__blackout_show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
 .Notification {
-    position: fixed;
-    top: 130px;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: #fff;
     height: 60px;
     width: 0;

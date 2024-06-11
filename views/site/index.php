@@ -1,7 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var app\models\Slider  $model */
+/** @var app\models\Incoming  $model */
 /** @var array $slider */
 /** @var array $news */
 /** @var array $ratingPlaces */
@@ -15,4 +15,4 @@ $this->params['meta_description'] = 'Достопримечательности 
 <?= $this->render('news', ['news'=>$news])?>
 <?= $this->render('blocks-index/rating-places', ['ratingPlaces'=>$ratingPlaces])?>
 <?= $this->render('blocks-index/compilate-places', ['compilatePlaces'=>$compilatePlaces])?>
-<?= $this->render('blocks/form')?>
+<?= $this->render('blocks/form', ['model'=>$model])?>

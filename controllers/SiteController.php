@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Incoming;
 use app\models\Catalog;
 use app\models\News;
 use app\models\Slider;
+use app\services\formValidator;
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -38,16 +41,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $slider = Slider::find()->orderBy('id')->all();
+        $slider = Slider::getSlides();
         $news = News::getLastNews();
         $ratingPlaces = Catalog::getRatingCatalog();
         $compilatePlaces = Catalog::getCompilateCatalog();
+        $model = new Incoming();
 
         return $this->render('index', [
             'slider'=> $slider,
             'news'=>$news,
             'ratingPlaces'=>$ratingPlaces,
-            'compilatePlaces'=>$compilatePlaces
+            'compilatePlaces'=>$compilatePlaces,
+            'model'=> $model
         ]);
     }
     public function actionContacts()
@@ -65,44 +70,39 @@ class SiteController extends Controller
     {
         return $this->render('catalog');
     }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
+    public function actionForm()
     {
-        Yii::$app->user->logout();
+        if(Yii::$app->request->isAjax) {
 
-        return $this->goHome();
-    }
+            $incoming = new Incoming();
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+            $request = Yii::$app->request->post()['Incoming'];
 
-            return $this->refresh();
+            $isAllInputExists = (count(array_diff_key(array_flip(['name', 'mail', 'agreement', 'number', 'text']), $request)) === 0);
+
+            if(!$isAllInputExists || !FormValidator::validate($request)) {
+                return $this->render('blocks/form', ['model'=>$incoming, 'success'=>false]);
+            }
+
+            $incoming->setName($request['name']);
+            $incoming->setNumber($request['number']);
+            $incoming->setMail($request['mail']);
+            $incoming->setText($request['text']);
+
+            try {
+
+                $incoming->save();
+
+                $incoming = new Incoming();
+
+                return $this->render('blocks/form', ['model'=>$incoming, 'success'=>true]);
+
+            } catch (\yii\db\Exception $e) {
+                return $this->render('blocks/form', ['model'=>$incoming, 'success'=>false]);
+            }
+
+        } else {
+            return $this->redirect('/');
         }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

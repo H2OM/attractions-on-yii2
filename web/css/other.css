@@ -192,8 +192,9 @@
     z-index: 10
 }
 
-.Form__form__radio {
-    display: flex
+.Form__form__radio > .field-incoming-agreement > .form-check {
+    display: flex;
+    gap: 10px;
 }
 
 .Form__form__radio__label {
@@ -213,7 +214,8 @@
     font-size: 16px;
     color: #fff;
     padding: 16px 26px;
-    transition: all .2s
+    transition: all .2s;
+    width: 100%;
 }
 
 .Form__form__input::placeholder {
@@ -227,7 +229,8 @@
 
 .Form__form__input_radio {
     margin-left: 10px;
-    cursor: pointer
+    cursor: pointer;
+    width: auto;
 }
 
 .Form__form__input__error {

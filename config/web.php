@@ -42,14 +42,17 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
+            'class'=>'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'admin'=>'/admin/index',
+                '<action:\w+>'=>'/site/<action>',
+                'defaultRoute'=>'/site/index'
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
