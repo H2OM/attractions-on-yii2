@@ -2,8 +2,10 @@
 
 namespace app\models;
 
+use http\Params;
 use yii\base\Model;
 use yii\db\ActiveRecord;
+use yii\web\View;
 
 
 /**
@@ -31,6 +33,19 @@ class Incoming extends ActiveRecord
             [['text'], 'string', 'max'=>1200, 'min'=>10],
             [['number'], 'string'],
         ];
+    }
+
+    public function setAll(array $values) : void
+    {
+        foreach (['name', 'mail', 'number', 'text'] as $key => $value) {
+
+            if (isset($values[$value])) {
+
+                $setter = 'set' . ucfirst($value);
+
+                $this->$setter($values[$value]);
+            }
+        }
     }
 
     /**

@@ -70,6 +70,10 @@ class SiteController extends Controller
     {
         return $this->render('catalog');
     }
+
+    /**
+//     * @throws BadRequestHttpException
+     */
     public function actionForm()
     {
         if(Yii::$app->request->isAjax) {
@@ -80,14 +84,17 @@ class SiteController extends Controller
 
             $isAllInputExists = (count(array_diff_key(array_flip(['name', 'mail', 'agreement', 'number', 'text']), $request)) === 0);
 
-            if(!$isAllInputExists || !FormValidator::validate($request)) {
-                return $this->render('blocks/form', ['model'=>$incoming, 'success'=>false]);
-            }
+            $incoming->setAll($request);
 
-            $incoming->setName($request['name']);
-            $incoming->setNumber($request['number']);
-            $incoming->setMail($request['mail']);
-            $incoming->setText($request['text']);
+            if(!$isAllInputExists || !FormValidator::validate($request)) {
+
+                //Для кастомной формы, без привязки к модели, заполненые поля будут передаваться в вид как переменные
+                //В виде будет проверка на существавание значения для поля
+
+                return $this->render('blocks/form', ['model'=>$incoming, 'success'=>false]);
+
+//              throw new \yii\web\BadRequestHttpException();
+            }
 
             try {
 
