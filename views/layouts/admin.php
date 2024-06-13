@@ -28,16 +28,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?php $this->head() ?>
 </head>
 
-<header class="Header">
+<header >
     <?php
     NavBar::begin([
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => 'navbar-nav', 'style'=>'width: 100%; justify-content: center; gap:40px;'],
         'items' => [
             ['label' => 'Каталог', 'url' => ['/admin/catalog']],
             ['label' => 'Добавить запись в каталог', 'url' => ['/admin/edit']],
+            ['label' => 'Выйти', 'url' => ['/admin/logout']],
         ]
     ]);
     NavBar::end();

@@ -46,26 +46,48 @@ class AdminController extends Controller
 
         $this->layout = 'authorization';
 
+        $errorMessage = null;
+
         if(Yii::$app->request->isPost) {
 
             $request = Yii::$app->request->post();
 
-            $isAllInputExists = (count(array_diff_key(array_flip(['login', 'password']), $request)) === 0);
+            $isAllInputExists = (count(array_diff_key(array_flip(['username', 'password']), $request)) === 0);
 
             if($isAllInputExists) {
 
                 $user = new User();
 
                 $user->setPassword($request['password']);
-                $user->setUsername($request['login']);
+                $user->setUsername($request['username']);
 
+//                if ($user->setNewUser()) {
+//                 $errorMessage = "Успешно создан новый пользователь, пользуйтесь";
+//                }
+//
                 if($user->compare()) {
-                    Yii::$app->user->login($user->getUsername(), 3600*24*30);
+
+                    Yii::$app->user->login($user, 3600*24*30);
+
+                    $this->redirect( Yii::$app->request->hostInfo . '/admin');
+
+                } else {
+
+                    $errorMessage = "Неверное имя пользователя или пароль";
+
+                    $user->setPassword('');
                 }
             }
         }
 
-        return $this->render('authform');
+        return $this->render('authform', ['errorMessage' => $errorMessage]);
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        $this->redirect( Yii::$app->request->hostInfo . '/admin/authorization');
     }
 
     public function actionEdit(string $id = null)
@@ -94,9 +116,9 @@ class AdminController extends Controller
 
                 $catalog->refresh();
 
-                $message['message'] = isset($request['id']) ? "Успешное обновление записи" : "Успешное добавление записи";
+                $message['message'] = (isset($request['id']) ? "Успешное обновление записи" : "Успешное добавление записи");
 
-                $message=['status'=>true];
+                $message['status'] = true;
 
                 Yii::$app->request->setQueryParams(['id'=>$catalog->getId()]);
 
@@ -126,7 +148,7 @@ class AdminController extends Controller
         $query = Catalog::find();
 
         $pagination = new Pagination([
-            'defaultPageSize' => 10,
+            'defaultPageSize' => 5,
             'totalCount' => $query->count()
         ]);
 

@@ -21,7 +21,26 @@
         transform: scale(.95)
     }
 }
-
+.pagination {
+    justify-content: center;
+    gap: 15px;
+    li {
+        a {
+            padding: 0 9px;
+            text-align: center;
+        }
+    }
+    li.next, li.prev {
+        a {
+            padding: 0;
+            border: 0;
+        }
+    }
+    li.active {
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+    }
+}
 .Catalog__grid__cart:last-child {
     border-bottom: 0
 }
@@ -32,6 +51,10 @@
     object-fit: cover;
     border-radius: 10px;
     transition: all .2s
+}
+
+.Catalog__grid__cart__desc {
+    width: 100%;
 }
 
 .Catalog__grid__cart__desc__up {

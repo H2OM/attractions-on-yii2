@@ -21,16 +21,18 @@
 
 .Edit__message {
     position: absolute;
-    top: 200px;
+    top: 120px;
     left: 50%;
-    transform: translateX(-100%);
+    transform: translateX(-50%);
     z-index: 444;
     padding: 20px;
     color: white;
+
+    border-radius: 10px;
 }
 .Edit__message_success {
-
+    background-color: #346834fc;
 }
-Edit__message_error {
-
+.Edit__message_error {
+    background-color: #c12424;
 }

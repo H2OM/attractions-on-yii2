@@ -12,7 +12,7 @@
 
         <?php if ($message !== null && isset($message['message'])):?>
             <div class="Edit__message <?=$message['status'] ? "Edit__message_success" : "Edit__message_error"?>">
-                <?=$message['message']?>
+                <?=Html::encode($message['message'])?>
             </div>
         <?php endif;?>
 
@@ -28,16 +28,16 @@
             <?php endif;?>
 
             <label for="title">Заголовок:</label>
-            <input id="title" name="title" class="Form__form__input" value="<?= $current['title'] ?? ""?>" type="text"/>
+            <input id="title" name="title" class="Form__form__input" value="<?= $current['title'] ?? ""?>" type="text" required/>
 
             <label for="article">Артикль:</label>
-            <input id="article" name="article" class="Form__form__input" value="<?=$current['article'] ?? ""?>" type="text"/>
+            <input id="article" name="article" class="Form__form__input" value="<?=$current['article'] ?? ""?>" type="text" required/>
 
             <label for="image">Изображение:</label>
-            <input id="image" name="image" class="Form__form__input" value="<?=$current['image'] ?? ""?>" type="text"/>
+            <input id="image" name="image" class="Form__form__input" value="<?=$current['image'] ?? ""?>" type="text" required/>
 
             <label for="city">Город:</label>
-            <input id="city" name="city" class="Form__form__input" value="<?=$current['city'] ?? ""?>" type="text"/>
+            <input id="city" name="city" class="Form__form__input" value="<?=$current['city'] ?? ""?>" type="text" required/>
 
             <label for="text">Текст:</label>
             <textarea id="text" cols="30" rows="10" name="text" class="Form__form__input" type="text"><?=$current['text'] ?? ""?></textarea>

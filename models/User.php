@@ -6,32 +6,63 @@ use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use function PHPUnit\Framework\isEmpty;
 
 /**
+ * @property string $id
  * @property string $password
  * @property string $username
- * @property mixed|null $auth_key
+ * @property string $authKey
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_ACTIVE = 10;
-
     public function rules() : array
     {
         return [
-            [['login', 'password'], 'required'],
+            [['username', 'password'], 'required'],
         ];
     }
 
+    /**
+     * Сравнение переданного пароля с паролем переданного юзера
+     *
+     * @return bool
+     */
     public function compare() : bool
     {
-        $password = static::findBySql("SELECT password FROM " . static::tableName() . " WHERE :user_name", [':user_name'=>$this->getUsername()]);
+        $user = static::findBySql("SELECT * FROM " . static::tableName() . " WHERE username = :user_name", [':user_name'=>$this->getUsername()])->one();
 
-        if($password === null) {
+        if($user === null) {
             return false;
         }
 
-        return Yii::$app->security->validatePassword($this->getPassword(), $password);
+        if(Yii::$app->getSecurity()->validatePassword($this->getPassword(), $user['password'])) {
+
+            $this->setUsername($user['username']);
+
+            $this->setPassword($user['password']);
+
+            $this->setId($user['id']);
+
+            $this->authKey = $user['authKey'];
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @throws Exception
+     * @throws \yii\db\Exception
+     */
+    public function setNewUser() : bool
+    {
+        $this->setPassword(Yii::$app->getSecurity()->generatePasswordHash($this->getPassword()));
+
+        $this->authKey = Yii::$app->getSecurity()->generateRandomString(64);
+
+        return $this->save();
     }
 
     /**
@@ -72,19 +103,38 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @inheritdoc
+     * @param string $id
+     * @return void
      */
-    public function getAuthKey(): ?string
+    public function setId(string $id): void
     {
-        return $this->auth_key;
+        $this->id = $id;
     }
-    public function validateAuthKey($authKey): ?bool
+
+    /**
+     * @return string
+     */
+    public function getAuthKey() : string
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->authKey;
     }
+
+    /**
+     * @param $authKey
+     * @return bool
+     */
+    public function validateAuthKey($authKey) : bool
+    {
+        return $this->authKey === $authKey;
+    }
+
+    /**
+     * @param $id
+     * @return User|IdentityInterface|null
+     */
     public static function findIdentity($id): User|IdentityInterface|null
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id'=>$id]);
     }
 
     /**
@@ -95,5 +145,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
+
+
 
 }
