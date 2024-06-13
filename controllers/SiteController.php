@@ -2,19 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\Catalog\Catalog;
+use app\models\Catalog\Repository\CatalogRepository;
 use app\models\Incoming;
-use app\models\Catalog;
 use app\models\News;
 use app\models\Slider;
 use app\services\formValidator;
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\BadRequestHttpException;
+use yii\data\Pagination;
 use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -43,8 +39,8 @@ class SiteController extends Controller
     {
         $slider = Slider::getSlides();
         $news = News::getLastNews();
-        $ratingPlaces = Catalog::getRatingCatalog();
-        $compilatePlaces = Catalog::getCompilateCatalog();
+        $ratingPlaces = CatalogRepository::getRatingCatalog();
+        $compilatePlaces = CatalogRepository::getCompilateCatalog();
         $model = new Incoming();
 
         return $this->render('index', [
@@ -68,7 +64,22 @@ class SiteController extends Controller
     }
     public function actionCatalog()
     {
-        return $this->render('catalog');
+        $query = Catalog::find();
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 10,
+            'totalCount' => $query->count()
+        ]);
+
+        $catalog = $query->orderBy('title')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('catalog', [
+            'catalog'=>$catalog,
+            'pagination'=>$pagination
+        ]);
     }
 
     /**
@@ -87,9 +98,6 @@ class SiteController extends Controller
             $incoming->setAll($request);
 
             if(!$isAllInputExists || !FormValidator::validate($request)) {
-
-                //Для кастомной формы, без привязки к модели, заполненые поля будут передаваться в вид как переменные
-                //В виде будет проверка на существавание значения для поля
 
                 return $this->render('blocks/form', ['model'=>$incoming, 'success'=>false]);
 

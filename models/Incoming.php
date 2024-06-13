@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use http\Params;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\web\View;
@@ -31,7 +30,7 @@ class Incoming extends ActiveRecord
             ['mail', 'email'],
             [['name'], 'string', 'max'=>60, 'min'=>3],
             [['text'], 'string', 'max'=>1200, 'min'=>10],
-            [['number'], 'string'],
+            [['number'], 'default'],
         ];
     }
 

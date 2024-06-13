@@ -21,7 +21,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -48,6 +48,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'admin/<action:\w+>'=> '/admin/<action>',
                 'admin'=>'/admin/index',
                 '<action:\w+>'=>'/site/<action>',
                 'defaultRoute'=>'/site/index'

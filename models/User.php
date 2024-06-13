@@ -1,104 +1,99 @@
 <?php
 
 namespace app\models;
+use Yii;
+use yii\base\Exception;
+use yii\base\NotSupportedException;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+/**
+ * @property string $password
+ * @property string $username
+ * @property mixed|null $auth_key
+ */
+class User extends ActiveRecord implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
+    const STATUS_ACTIVE = 10;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentity($id)
+    public function rules() : array
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return [
+            [['login', 'password'], 'required'],
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function compare() : bool
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
+        $password = static::findBySql("SELECT password FROM " . static::tableName() . " WHERE :user_name", [':user_name'=>$this->getUsername()]);
+
+        if($password === null) {
+            return false;
         }
 
-        return null;
+        return Yii::$app->security->validatePassword($this->getPassword(), $password);
     }
 
     /**
-     * Finds user by username
-     *
+     * @param string $password
+     */
+    public function setPassword(string $password) : void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
      * @param string $username
-     * @return static|null
+     * @return void
      */
-    public static function findByUsername($username)
+    public function setUsername(string $username) : void
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        $this->username = $username;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
     public function getId()
     {
-        return $this->id;
+        return $this->getPrimaryKey();
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function getAuthKey()
+    public function getAuthKey(): ?string
     {
-        return $this->authKey;
+        return $this->auth_key;
+    }
+    public function validateAuthKey($authKey): ?bool
+    {
+        return $this->getAuthKey() === $authKey;
+    }
+    public static function findIdentity($id): User|IdentityInterface|null
+    {
+        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
+     * @throws NotSupportedException
      */
-    public function validateAuthKey($authKey)
+    public static function findIdentityByAccessToken($token, $type = null): ?IdentityInterface
     {
-        return $this->authKey === $authKey;
+        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
-    }
 }

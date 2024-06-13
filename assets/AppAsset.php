@@ -29,10 +29,7 @@ class AppAsset extends AssetBundle
         'web/css/news.css',
         'web/css/other.css',
     ];
-    public $js = [
-        'web/js/main-slider.js',
-        'web/js/form.js',
-    ];
+    public $js = [];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset'

@@ -7,6 +7,9 @@
 /** @var array $ratingPlaces */
 /** @var array $compilatePlaces */
 
+$this->registerJsFile('web/js/main-slider.js');
+$this->registerJsFile('web/js/form.js');
+
 $this->title = 'TopAttractions';
 $this->params['meta_description'] = 'Достопримечательности Краснодарского края';
 ?>

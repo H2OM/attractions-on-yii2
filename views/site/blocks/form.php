@@ -15,6 +15,7 @@
 
             <?php $form = ActiveForm::begin([
                     'action'=>'/form',
+                    'enableClientValidation'=> false,
                     'options'=>['data'=>['pjax'=>true], 'class'=>'Form__form'],
                     'fieldConfig'=>['enableLabel'=>false]
             ]);?>
